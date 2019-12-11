@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 /* eslint-disable max-statements */
 /* eslint-disable complexity */
 const fs = require("fs");
@@ -73,13 +74,13 @@ const day6 = arr => {
   let youIndex = 0;
   for (let i = 0; i < youPath.length; i++) {
     if (youPath[i] === meetingPoint) break;
-    youIndex++;
+    youIndex = i;
   }
 
   let sanIndex = 0;
   for (let i = 0; i < sanPath.length; i++) {
     if (sanPath[i] === meetingPoint) break;
-    sanIndex++;
+    sanIndex = i;
   }
   console.log(sanIndex + youIndex);
 };
