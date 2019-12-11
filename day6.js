@@ -1,3 +1,5 @@
+/* eslint-disable max-statements */
+/* eslint-disable complexity */
 const fs = require("fs");
 let input = fs
   .readFileSync("./day6input.txt")
@@ -17,7 +19,9 @@ let test = [
   "D)I",
   "E)J",
   "J)K",
-  "K)L"
+  "K)L",
+  "K)YOU",
+  "I)SAN"
 ];
 
 const day6 = arr => {
@@ -29,13 +33,12 @@ const day6 = arr => {
     let orbit = planets[0];
 
     if (!galaxy[obj]) {
-      galaxy[obj] = [orbit];
-    } else {
-      galaxy[obj].push(orbit);
+      galaxy[obj] = orbit;
     }
   });
 
   let totalOrbits = 0;
+  // eslint-disable-next-line guard-for-in
   for (const obj in galaxy) {
     let currentObj = obj;
     while (galaxy[currentObj]) {
@@ -43,7 +46,42 @@ const day6 = arr => {
       currentObj = galaxy[currentObj];
     }
   }
-  console.log(totalOrbits);
+
+  let youPath = [galaxy.YOU];
+  let youOrbit = galaxy.YOU;
+  while (galaxy[youOrbit] !== "COM") {
+    youPath.push(galaxy[youOrbit]);
+    youOrbit = galaxy[youOrbit];
+  }
+
+  let sanPath = [galaxy.SAN];
+  let sanOrbit = galaxy.SAN;
+  while (galaxy[sanOrbit] !== "COM") {
+    sanPath.push(galaxy[sanOrbit]);
+    sanOrbit = galaxy[sanOrbit];
+  }
+
+  let meetingPoint;
+  for (let i = 0; i < sanPath.length; i++) {
+    let planet = sanPath[i];
+    if (youPath.indexOf(planet) > 1) {
+      meetingPoint = planet;
+      break;
+    }
+  }
+
+  let youIndex = 0;
+  for (let i = 0; i < youPath.length; i++) {
+    if (youPath[i] === meetingPoint) break;
+    youIndex++;
+  }
+
+  let sanIndex = 0;
+  for (let i = 0; i < sanPath.length; i++) {
+    if (sanPath[i] === meetingPoint) break;
+    sanIndex++;
+  }
+  console.log(sanIndex + youIndex);
 };
 
 day6(input);
