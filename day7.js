@@ -10,42 +10,7 @@ let input = fs
   .map(num => Number(num));
 
 // console.log(input[514]);
-let test = [
-  3,
-  31,
-  3,
-  32,
-  1002,
-  32,
-  10,
-  32,
-  1001,
-  31,
-  -2,
-  31,
-  1007,
-  31,
-  0,
-  33,
-  1002,
-  33,
-  7,
-  33,
-  1,
-  33,
-  31,
-  31,
-  1,
-  32,
-  31,
-  31,
-  4,
-  31,
-  99,
-  0,
-  0,
-  0
-];
+let test = [3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0];
 
 function day5(arr, phase, machine) {
   let instructionPointer = 0;
@@ -196,31 +161,22 @@ function getAllPermutations(string) {
 }
 
 function day7(arr) {
+  // console.log("BEFORE", arr);
   let phasePermutations = getAllPermutations("01234").map(set => set.split(""));
-  let feedbackPermutations = getAllPermutations("56789").map(set =>
-    set.split("")
-  );
+
   let firstMax = 0;
 
   for (let i = 0; i < phasePermutations.length; i++) {
     let currentCombo = phasePermutations[i];
     let prev = 0;
     currentCombo.forEach(phase => {
-      prev = day5(arr, Number(phase), prev);
+      let copy = [...arr];
+      prev = day5(copy, Number(phase), prev);
     });
     firstMax = Math.max(firstMax, prev);
   }
-
-  let secondMax = 0;
-  for (let i = 0; i < feedbackPermutations.length; i++) {
-    let currentCombo = feedbackPermutations[i];
-    let prev = firstMax;
-    currentCombo.forEach(phase => {
-      prev = day5(arr, Number(phase), prev);
-    });
-    secondMax = Math.max(secondMax, prev);
-  }
-  console.log(secondMax);
+  // console.log("AFTER", arr);
+  console.log(firstMax);
 }
 
 day7(input);
