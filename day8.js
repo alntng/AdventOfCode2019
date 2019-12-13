@@ -29,11 +29,60 @@ function imageLayer(arr, width, height) {
 
     stacksOfLayers.push(currentLayer);
   }
-  // console.log(stacksOfLayers[100]);
+  // console.log(stacksOfLayers[99].length);
   return stacksOfLayers;
 }
 
-imageLayer(input, 25, 6);
+// imageLayer(input, 25, 6);
+
+function singleImage(arr, width, height) {
+  let layers = imageLayer(arr, width, height);
+  let newLayers = [];
+
+  layers.map(layer => {
+    let image = [];
+    for (let i = 0; i < height; i++) {
+      let row = [];
+      for (let j = 0; j < width; j++) {
+        row.push(layer[width * i + j]);
+      }
+      image.push(row);
+    }
+    newLayers.push(image);
+  });
+  return newLayers;
+}
+
+// let testImages = singleImage(test, 3, 2);
+// console.log(testImages[0]);
+
+// console.log(inputImages);
+
+function populateDrawing(arr, width, height) {
+  let dimensions = width * height;
+  let canvas = new Array(dimensions).fill(" ");
+
+  let image = imageLayer(arr, width, height);
+  // console.log(image[0]);
+  image.forEach(layer => {
+    for (let i = 0; i < dimensions; i++) {
+      let currentCanvas = canvas[i];
+      let currentImage = layer[i];
+      if (currentCanvas === " ") {
+        if (currentImage === 0) {
+          canvas[i] = "X";
+        } else if (currentImage === 1) {
+          canvas[i] = "O";
+        }
+      }
+    }
+  });
+
+  canvas = singleImage(canvas, width, height);
+  console.log(canvas[0]);
+}
+
+populateDrawing(input, 25, 6);
 
 //Count zeroes
 function countZeroes(arr) {
@@ -72,4 +121,4 @@ function fewestZeroes(arr, width, height) {
   console.log(oneDigits * twoDigits);
 }
 
-fewestZeroes(input, 25, 6);
+// fewestZeroes(input, 25, 6);
