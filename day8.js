@@ -60,7 +60,7 @@ function singleImage(arr, width, height) {
 
 function populateDrawing(arr, width, height) {
   let dimensions = width * height;
-  let canvas = new Array(dimensions).fill(" ");
+  let canvas = new Array(dimensions).fill(".");
 
   let image = imageLayer(arr, width, height);
   // console.log(image[0]);
@@ -68,18 +68,23 @@ function populateDrawing(arr, width, height) {
     for (let i = 0; i < dimensions; i++) {
       let currentCanvas = canvas[i];
       let currentImage = layer[i];
-      if (currentCanvas === " ") {
+      if (currentCanvas === ".") {
         if (currentImage === 0) {
-          canvas[i] = "X";
+          canvas[i] = " ";
         } else if (currentImage === 1) {
-          canvas[i] = "O";
+          canvas[i] = "#";
         }
       }
     }
   });
 
-  canvas = singleImage(canvas, width, height);
-  console.log(canvas[0]);
+  [canvas] = singleImage(canvas, width, height);
+  let decodedImage = [];
+  canvas.forEach(layer => {
+    decodedImage.push(layer.join(""));
+  });
+
+  console.log(decodedImage);
 }
 
 populateDrawing(input, 25, 6);
