@@ -31,14 +31,16 @@ function gcd(x, y) {
 
 // console.log(gcd(-4, 2));
 
-function cartesian2Polar(x, y) {
-  distance = Math.sqrt(x * x + y * y);
-  radians = Math.atan2(y, x); //This takes y first
-  polarCoor = { distance: distance, radians: radians };
-  return polarCoor;
+function calcAngleDegrees(y, x) {
+  let degrees = (Math.atan2(y, x) * 180) / Math.PI;
+  if (degrees < 0) {
+    return 360 + degrees;
+  } else {
+    return degrees;
+  }
 }
 
-// console.log(Math.atan2(3, 4));
+// console.log(calcAngleDegrees(-1, 7) + 90);
 
 const day10 = arr => {
   let foundAsteroids = [];
@@ -82,37 +84,28 @@ const day10 = arr => {
 
   finalAsteroids.forEach(point => {
     let coordinates = point.split("/");
-    finalAsteroidsArray.push([
-      point,
-      Math.atan2(coordinates[1], coordinates[0])
-    ]);
+    let degrees =
+      calcAngleDegrees(Number(coordinates[0]), Number(coordinates[1])) + 90;
+
+    if (degrees > 360) {
+      degrees -= 360;
+    }
+
+    finalAsteroidsArray.push([point, degrees]);
   });
 
   finalAsteroidsArray.sort((a, b) => a[1] - b[1]);
-  let zeroIndex = 0;
 
-  finalAsteroidsArray.forEach((set, idx) => {
-    if (set[1] === 0) {
-      zeroIndex = idx;
-    }
-  });
+  let stationY = foundAsteroids[optimal][0];
+  let stationX = foundAsteroids[optimal][1];
 
-  let count = 0;
-  while (count <= 200) {
-    if (zeroIndex < finalAsteroidsArray.length) {
-      zeroIndex++;
-    } else {
-      zeroIndex = 0;
-    }
-    count++;
-  }
-
-  let thisPoint = finalAsteroidsArray[zeroIndex];
-  let x = Number(thisPoint[0].split("/")[1]);
-  x *= 100;
-  let y = Number(thisPoint[0].split("/")[0]);
-  console.log((x -= y));
-  // console.log(thisPoint[0].split("/"));
+  let difference = finalAsteroidsArray[199][0].split("/");
+  let changeInY = Number(difference[0]);
+  let changeInX = Number(difference[1]);
+  console.log(stationY, changeInY);
+  console.log(stationX, changeInX);
+  // console.log("optimal", foundAsteroids[optimal][0]);
+  // console.log("finalAsteroidsArray", changeInX, changeInY);
 };
 
 day10(input);
