@@ -99,13 +99,11 @@ const day10 = arr => {
   let stationY = foundAsteroids[optimal][0];
   let stationX = foundAsteroids[optimal][1];
 
-  let difference = finalAsteroidsArray[199][0].split("/");
+  let difference = finalAsteroidsArray[198][0].split("/");
   let changeInY = Number(difference[0]);
   let changeInX = Number(difference[1]);
-  console.log(stationY, changeInY);
-  console.log(stationX, changeInX);
-  // console.log("optimal", foundAsteroids[optimal][0]);
-  // console.log("finalAsteroidsArray", changeInX, changeInY);
+
+  console.log((stationX += changeInX) * 100 + (stationY += changeInY));
 };
 
 day10(input);
