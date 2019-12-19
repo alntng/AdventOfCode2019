@@ -87,7 +87,7 @@ const day10 = arr => {
     let degrees =
       calcAngleDegrees(Number(coordinates[0]), Number(coordinates[1])) + 90;
 
-    if (degrees > 360) {
+    if (degrees >= 360) {
       degrees -= 360;
     }
 
@@ -99,7 +99,7 @@ const day10 = arr => {
   let stationY = foundAsteroids[optimal][0];
   let stationX = foundAsteroids[optimal][1];
 
-  let difference = finalAsteroidsArray[198][0].split("/");
+  let difference = finalAsteroidsArray[199][0].split("/");
   let changeInY = Number(difference[0]);
   let changeInX = Number(difference[1]);
 
