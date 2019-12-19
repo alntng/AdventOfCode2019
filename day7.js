@@ -161,7 +161,6 @@ function getAllPermutations(string) {
 }
 
 function day7(arr) {
-  // console.log("BEFORE", arr);
   let phasePermutations = getAllPermutations("01234").map(set => set.split(""));
 
   let firstMax = 0;
